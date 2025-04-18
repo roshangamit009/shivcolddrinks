@@ -12,7 +12,7 @@ const AddProduct = () => {
   const [form, setForm] = useState<Product>({ name: '', price: 0, category: '' });
   const [products, setProducts] = useState<Product[]>([]);
 
-  const backendURL = 'https://shivcolddrinks-1.onrender.com/api/products';
+  const backendURL = 'http://localhost:5000/api/products';
 
   const fetchProducts = async () => {
     try {
