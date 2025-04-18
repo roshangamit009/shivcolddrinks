@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import axios from 'axios';
 
 interface Product {
@@ -8,18 +8,12 @@ interface Product {
   category: string;
 }
 
-function AddProduct() {
-  const [form, setForm] = useState<Product>({
-    name: '',
-    price: 0,
-    category: ''
-  });
-
+const AddProduct = () => {
+  const [form, setForm] = useState<Product>({ name: '', price: 0, category: '' });
   const [products, setProducts] = useState<Product[]>([]);
 
-  const backendURL = 'http://localhost:5000/api/products'; // ⬅️ change this to your Render/Glitch backend when deploying
+  const backendURL = 'https://shivcolddrinks-1.onrender.com/api/products';
 
-  // Fetch all products
   const fetchProducts = async () => {
     try {
       const res = await axios.get<Product[]>(backendURL);
@@ -33,15 +27,12 @@ function AddProduct() {
     fetchProducts();
   }, []);
 
-  // Handle form submission
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', form); // ✅ Debug log to check form data
-
     try {
       await axios.post(backendURL, form);
-      setForm({ name: '', price: 0, category: '' }); // Reset form
-      fetchProducts(); // Fetch updated product list
+      setForm({ name: '', price: 0, category: '' });
+      fetchProducts();
     } catch (error) {
       console.error('Error adding product:', error);
     }
@@ -74,17 +65,7 @@ function AddProduct() {
           required
           style={{ width: '100%', padding: '0.5rem', marginBottom: '1rem' }}
         />
-        <button
-          type="submit"
-          style={{
-            width: '100%',
-            padding: '0.75rem',
-            backgroundColor: '#007bff',
-            color: '#fff',
-            border: 'none',
-            cursor: 'pointer'
-          }}
-        >
+        <button type="submit" style={{ width: '100%', padding: '0.75rem', backgroundColor: '#007bff', color: '#fff', border: 'none' }}>
           Add Product
         </button>
       </form>
@@ -99,6 +80,6 @@ function AddProduct() {
       </ul>
     </div>
   );
-}
+};
 
 export default AddProduct;
